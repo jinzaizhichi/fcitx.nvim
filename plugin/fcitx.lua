@@ -43,5 +43,7 @@ vim.cmd[[
     au InsertLeave * :lua _Fcitx2en()
     au CmdlineEnter [/\?] :lua _Fcitx2NonLatin()
     au CmdlineLeave [/\?] :lua _Fcitx2en()
+    au TermEnter * :lua _Fcitx2NonLatin()
+    au TermLeave * :lua _Fcitx2en()
   augroup END
 ]]
