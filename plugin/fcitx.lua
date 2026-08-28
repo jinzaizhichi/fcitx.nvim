@@ -27,6 +27,15 @@ function _Fcitx2en()
   end
 end
 
+function _FcitxFocusGained()
+  -- Only enforce English when not in an input-active mode (insert/terminal/cmdline),
+  -- so that focus changes while typing don't clobber the current input state.
+  local m = vim.fn.mode()
+  if m == 'n' or m:match('^[vV\022sS]') then
+    _Fcitx2en()
+  end
+end
+
 function _Fcitx2NonLatin()
   if vim.b.input_toggle_flag == nil then
     vim.b.input_toggle_flag = false
@@ -45,5 +54,6 @@ vim.cmd[[
     au CmdlineLeave [/\?] :lua _Fcitx2en()
     au TermEnter * :lua _Fcitx2NonLatin()
     au TermLeave * :lua _Fcitx2en()
+    au FocusGained * :lua _FcitxFocusGained()
   augroup END
 ]]
